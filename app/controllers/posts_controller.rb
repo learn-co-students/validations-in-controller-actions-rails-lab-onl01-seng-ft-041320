@@ -8,9 +8,16 @@ class PostsController < ApplicationController
   end
 
   def update
-    @post.update(post_params)
 
-    redirect_to post_path(@post)
+    # create temporary post to see if update params are valid
+    if Post.new(post_params).valid?
+      @post.update(post_params)
+
+      redirect_to post_path(@post)
+    else
+      #redirect_to edit_post_path(@post)
+      render :edit
+    end
   end
 
   private
